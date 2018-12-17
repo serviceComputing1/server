@@ -1,6 +1,13 @@
 # server
 server's code 
 
+## 安装指南
+```
+go get github.com/serviceComputing1/server
+```
+您可能需要需改包的路径以运行项目
+
+
 ## 项目小结
 1. 我认为go 的json处理比起js差，可能是js原生支持json访问，在go里面都要经过结构体转换再解码或编码，我觉得很麻烦。
 2.项目后端采用了 MVC模式，model部分负责处理query数据，controller部分负责处理路由请求，从model中获得数据，并根据不同的路由请求返回不同的数据。
