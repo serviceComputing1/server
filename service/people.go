@@ -39,7 +39,13 @@ func GetPeople(w http.ResponseWriter, req * http.Request){
 	//param,_ := vals["page"]
 	search := vals.Get("search")
 	pp := vals.Get("page")
-	fmt.Printf("%T, %T\n",search,pp)
+	callbackName := vals.Get("callback")
+	if callbackName == ""{
+		fmt.Fprintf(w,"Please give callback name in query string")
+		return 
+	}
+
+	//fmt.Printf("%T, %T\n",search,pp)
 
 
 	if pp != ""{
@@ -70,7 +76,7 @@ func GetPeople(w http.ResponseWriter, req * http.Request){
 		resData.Previous = PrePage(page)
 	}
 	
-	w.Header().Set("Content-Type","application/json")
+	w.Header().Set("Content-Type","application/javascript")
 	if res != nil{		
 
 		resData.Results = res
@@ -81,7 +87,8 @@ func GetPeople(w http.ResponseWriter, req * http.Request){
 			fmt.Println(err)
 			return
 		}
-		w.Write(b)
+		//w.Write(b)
+		fmt.Fprintf(w,"%s(%s);",callbackName,b) // jsonp call
 	} else {
 		NotFound(w,req) 
 	}
@@ -92,6 +99,13 @@ func GetPeople(w http.ResponseWriter, req * http.Request){
 
 func GetPerson(w http.ResponseWriter, req * http.Request) {
 	params := mux.Vars(req)
+	vals := req.URL.Query()
+
+	callbackName := vals.Get("callback")
+	if callbackName == ""{
+		fmt.Fprintf(w,"Please give callback name in query string")
+		return 
+	}
 
 	id,err := strconv.Atoi(params["id"])
 
@@ -105,36 +119,17 @@ func GetPerson(w http.ResponseWriter, req * http.Request) {
 	if err !=nil{
 		fmt.Println(err)
 	}
-	w.Header().Set("Content-Type","application/json")
+	w.Header().Set("Content-Type","application/javascript")
 
 	if res == nil{
 		NotFound(w,req)
 		return
 	}
-	w.Write(buf)
+	//w.Write(buf)
+	fmt.Fprintf(w,"%s(%s);",callbackName,buf)  //jsonp
 }
 
-func GetAllApi(w http.ResponseWriter, req * http.Request){
-	var res1 map[string]string
-	res1 = make(map[string]string)
-	res1["people"] = "localhost:8080/people/"
-	res1["films"] = "localhost:8080/films/"
-	res1["vehicles"] =	"localhost:8080/vehicles/"
-	res1["planets"] = "localhost:8080/planets"
-	res1["species"] = "localhost:8080/species"
-	res1["starships"] = "localhost:8080/starships"
 
-	b,err := json.Marshal(res1)
-	if err !=nil{
-		fmt.Println(err)
-		NotFound(w,req)
-		return 
-	}
-
-
-	w.Header().Set("Content-Type","application/json")
-	w.Write(b)
-}
 
 func NextPage(curpage int) string{
 	if curpage * perPage < model.GetTotalNumOfPeople(){
