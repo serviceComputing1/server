@@ -31,7 +31,6 @@ func initRoutes(mx *mux.Router) {
 	mx.HandleFunc("/people/{id}",GetPerson).Methods("GET")
 	mx.HandleFunc("/api",GetAllApi).Methods("GET")
 	//mx.Path("/people/").Queries("page","{page}").HandlerFunc(GetPeople).Name("GetPeople").Methods("GET")
-
 }
 
 func GetAllApi(w http.ResponseWriter, req * http.Request){
