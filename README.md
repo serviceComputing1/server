@@ -15,7 +15,7 @@ go get github.com/serviceComputing1/server
 4. 后来看到一个很好的框架echo,觉得很不错，里面有jsonp和JWT验证，很方便。
 5. 我觉得interface 的多态和继承还要好好学学，想根据传入的结构体类型的interface，传出对应的interface ，再断言为struct，但是不成功。
 6. boltdb真的很简单，所以他没有sql的query功能。
-7. 目前只实现了people 的get 和search 方法，还没有实现 JWT验证，后续待完成
+
 
 ## 复制swapi
 1. 获取数据，预先人工获取了每个资源你的数量，然后每个循环请求，得到的json数据再存入boltdb中。
