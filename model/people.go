@@ -3,7 +3,7 @@ package model
 import (
 	"encoding/json"
 
-	"github.com/sefaice/server/swapi"
+	"github.com/serviceComputing1/server/swapi"
 
 	//"bytes"
 	"fmt"

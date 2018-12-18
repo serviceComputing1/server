@@ -4,8 +4,8 @@ import (
 	//swapi "github.com/sefaice/server/swapi"
 	"fmt"
 
-	"github.com/sefaice/server/model"
-	"github.com/sefaice/server/service"
+	"github.com/serviceComputing1/server/model"
+	"github.com/serviceComputing1/server/service"
 )
 
 func main() {

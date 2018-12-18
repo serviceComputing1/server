@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/sefaice/server/model"
-	"github.com/sefaice/server/swapi"
+	"github.com/serviceComputing1/server/model"
+	"github.com/serviceComputing1/server/swapi"
 	//"strings"
 )
 
