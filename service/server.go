@@ -3,22 +3,20 @@ package service
 
 import(
 	"net/http"
-	//"os"
-	//"log"
-	"github.com/codegangsta/negroni"
-	"github.com/gorilla/mux"
 	"encoding/json"
 	"fmt"
+	//"github.com/serviceComputing1/server/routes"
     //"github.com/unrolled/render"
 )
 
+/*
 func NewServer () * negroni.Negroni{
 
 	n := negroni.Classic()
 
-	mx := mux.NewRouter()
+	mx := routes.NewRouter()
 
-	initRoutes(mx)
+	//initRoutes(mx)
 
 	n.UseHandler(mx)
 
@@ -32,7 +30,7 @@ func initRoutes(mx *mux.Router) {
 	mx.HandleFunc("/api",GetAllApi).Methods("GET")
 	//mx.Path("/people/").Queries("page","{page}").HandlerFunc(GetPeople).Name("GetPeople").Methods("GET")
 }
-
+*/
 func GetAllApi(w http.ResponseWriter, req * http.Request){
 	var res1 map[string]string
 	res1 = make(map[string]string)
@@ -54,3 +52,9 @@ func GetAllApi(w http.ResponseWriter, req * http.Request){
 	w.Header().Set("Content-Type","application/json")
 	w.Write(b)
 }
+
+func GetIndex(w http.ResponseWriter, req * http.Request) {
+		http.ServeFile(w, req, "./dist/index.html")	
+		fmt.Println("index request ")
+}
+
