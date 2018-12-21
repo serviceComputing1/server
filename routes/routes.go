@@ -1,16 +1,14 @@
 package routes
 
-
 import (
 	"net/http"
 
 	//"github.com/coderminer/restful/auth"
-	"github.com/serviceComputing1/server/service"
-	"github.com/serviceComputing1/server/auth"
-	"github.com/gorilla/mux"
 	"os"
 
-
+	"github.com/gorilla/mux"
+	"github.com/serviceComputing1/server/auth"
+	"github.com/serviceComputing1/server/service"
 )
 
 type Route struct {
@@ -22,29 +20,27 @@ type Route struct {
 
 var routes []Route
 
-func init(){
-	register("GET","/people/",service.GetPeople,auth.TokenMiddleware)
-	register("GET","/people/{id}",service.GetPerson,auth.TokenMiddleware)
-	register("GET","/api",service.GetAllApi,nil)
-	register("GET","/",service.GetIndex,nil)
+func init() {
+	register("GET", "/people/", service.GetPeople, auth.TokenMiddleware)
+	register("GET", "/people/{id}", service.GetPerson, auth.TokenMiddleware)
+	register("GET", "/api", service.GetAllApi, nil)
+	register("GET", "/", service.GetIndex, nil)
 }
 
 func NewRouter() *mux.Router {
 
 	webRoot := os.Getenv("WEBROOT")
-    if len(webRoot) == 0 {
-        if root, err := os.Getwd(); err != nil {
-            panic("Could not retrive working directory")
-        } else {
-            webRoot = root
-            //fmt.Println(root)
-        }
-    }
+	if len(webRoot) == 0 {
+		if root, err := os.Getwd(); err != nil {
+			panic("Could not retrive working directory")
+		} else {
+			webRoot = root
+			//fmt.Println(root)
+		}
+	}
 
-	
 	router := mux.NewRouter()
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir(webRoot + "/dist")))
-	//router.PathPrefix("/css/").Handler(http.FileServer(http.Dir("./dist/css/")))
+
 	for _, route := range routes {
 		r := router.Methods(route.Method).
 			Path(route.Pattern)
@@ -54,6 +50,10 @@ func NewRouter() *mux.Router {
 			r.Handler(route.Handler)
 		}
 	}
+
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir(webRoot + "/dist")))
+	//router.PathPrefix("/css/").Handler(http.FileServer(http.Dir("./dist/css/")))
+
 	return router
 }
 

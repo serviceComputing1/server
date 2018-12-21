@@ -1,12 +1,11 @@
 package main
 
 import (
-	//swapi "github.com/sefaice/server/swapi"
 	"fmt"
 
+	"github.com/codegangsta/negroni"
 	"github.com/serviceComputing1/server/model"
 	"github.com/serviceComputing1/server/routes"
-	"github.com/codegangsta/negroni"
 )
 
 func main() {
@@ -17,7 +16,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	
+
 	server := NewServer()
 	server.Run(":8080")
 
@@ -25,8 +24,7 @@ func main() {
 
 }
 
-
-func NewServer () * negroni.Negroni{
+func NewServer() *negroni.Negroni {
 
 	n := negroni.Classic()
 
@@ -36,5 +34,5 @@ func NewServer () * negroni.Negroni{
 
 	n.UseHandler(mx)
 
-	return n;
+	return n
 }
